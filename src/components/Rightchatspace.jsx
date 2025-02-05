@@ -48,6 +48,7 @@ const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
     if (!userInput) return;
 
     setLoading(true);
+    setUserInput("");
     const aiResponse = await getMistralResponse(userInput);
     setResponse(aiResponse);
     setLoading(false);
@@ -57,24 +58,30 @@ const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 
   
     <div className="h-screen w-4/5  bg-[#212121] flex flex-col items-center !overflow-y-scroll custom-scrollbar  ">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
-        <h1 className="text-3xl font-semibold text-center text-blue-600 mb-6">Chat with Mistral AI</h1>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+      {}
+      
+        
+
+        <form onSubmit={handleSubmit} className="flex align-center justify-center align-center flex-col absolute bottom-2 w-3/5 p-4">
           <textarea
             value={userInput}
             onChange={handleInputChange}
-            className="w-full p-3 border rounded-md"
-            placeholder="Ask something..."
+            className="w-full bg-[#303030] p-3 text-white placeholder-[#b4b4b4] rounded-md"
+            placeholder="Message ChatGPT"
             rows="4"
+            cols="100"
           />
 
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 text-white rounded-md"
+            className="size-10  flex justify-center items-center bg-white absolute right-7 text-white rounded-full"
             disabled={loading}
+            
           >
-            {loading ? "Loading..." : "Ask AI"}
+           
+          <img src="src/assets/image/arrowup.svg" alt="" style={{ fill: loading ? 'grey' : 'black' }} />
+          
           </button>
         </form>
 
@@ -84,7 +91,7 @@ const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
             <p>{response}</p>
           </div>
         )}
-      </div>
+     
       <div>
  
    </div>
