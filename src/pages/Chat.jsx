@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Leftsidebar from "../components/Leftsidebar";
 
 
 
@@ -53,7 +54,9 @@ const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-8">
+    <div className="flex w-full h-full">
+    <Leftsidebar />
+    <div className="min-h-screen w-4/5 bg-[#212121] flex flex-col items-center justify-center py-8">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
         <h1 className="text-3xl font-semibold text-center text-blue-600 mb-6">Chat with Mistral AI</h1>
 
@@ -83,7 +86,9 @@ const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
         )}
       </div>
     </div>
+    </div>
   );
 }
 
 export default Chat;
+
