@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import TypingEffect from "./TypingEffect";
+
 
 
 
 
 const Rightchatspace = () => {
   const [userInput, setUserInput] = useState("");
-  const [response, setResponse] = useState("");
+  const [messages, setMessages] = useState([]);
+  // const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
 
 
@@ -47,19 +50,48 @@ const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
     e.preventDefault();
     if (!userInput) return;
 
+    const newMessages = [...messages, { role: "user", content: userInput }];
+    setMessages(newMessages);
+    setUserInput(""); // Clear input after sending
+
     setLoading(true);
-    setUserInput("");
+   
     const aiResponse = await getMistralResponse(userInput);
-    setResponse(aiResponse);
-    setLoading(false);
+    setMessages([...newMessages, { role: "ai", content: aiResponse }]);
+      setLoading(false);
+    // setResponse(aiResponse);
+  
+  };
+
+  const formatTextToBold = (text) => {
+    const parts = text.split(/\*\*(.*?)\*\*/g); // Split at **text**
+    return parts.map((part, index) =>
+      index % 2 === 1 ? <strong className="font-extrabold" key={index}>{part}</strong> : part
+    );
   };
 
   return (
 
   
-    <div className="h-screen w-4/5  bg-[#212121] flex flex-col items-center !overflow-y-scroll custom-scrollbar  ">
+    <div className="h-screen w-4/5  bg-[#212121] flex flex-col pt-14  items-center  overflow-y-hidden  ">
 
-      {}
+<div className="h-4/5 w-full px-[165px] pb-4 overflow-y-auto flex flex-col space-y-2 !overflow-y-scroll custom-scrollbar">
+        {messages.map((msg, index) => (
+          <div
+            key={index}
+            className={`p-3 rounded-lg max-w-[70%] ${
+              msg.role === "user"
+                ? "self-end bg-[#303030] !rounded-full flex justify-center items-center text-white"
+                : "self-start bg-transparent  text-white"
+            }`}
+          >
+          <pre style={{ fontFamily: "system-ui" }}
+             className={`whitespace-pre-wrap  ${msg.role === "ai" ? "w-57vw" : ""}`}>
+              {msg.role === "ai" ? <TypingEffect response={formatTextToBold(msg.content)}/> :formatTextToBold(msg.content)}</pre>
+          </div>
+        ))}
+        {loading && <div className="self-start text-gray-500">Typing...</div>}
+      </div>
       
         
 
@@ -67,10 +99,11 @@ const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
           <textarea
             value={userInput}
             onChange={handleInputChange}
-            className="w-full bg-[#303030] p-3 text-white placeholder-[#b4b4b4] rounded-md"
+            className="w-full bg-[#303030] p-3 resize-none text-white placeholder-[#b4b4b4] rounded-md"
             placeholder="Message ChatGPT"
             rows="4"
             cols="100"
+            
           />
 
           <button
@@ -85,12 +118,12 @@ const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
           </button>
         </form>
 
-        {response && (
+        {/* {response && (
           <div className="mt-6 p-4 bg-gray-100 rounded-md">
             <h3 className="font-semibold text-lg">AI's Response:</h3>
             <p>{response}</p>
           </div>
-        )}
+        )} */}
      
       <div>
  

@@ -19,8 +19,13 @@
   body{
     overflow: hidden;
     height: 100vh;
+    
   }
 
   .h-90-vh{
     height: 90vh;
+  }
+
+  .w-57vw{
+    width: 57vw;
   }
