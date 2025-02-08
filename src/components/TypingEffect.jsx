@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+
 
 // Typing effect component
 const TypingEffect = (props) => {
@@ -21,12 +23,14 @@ const TypingEffect = (props) => {
           return prevIndex;
         }
       });
-    }, 50); // Adjust the speed (milliseconds per letter)
+    }, 1); // Adjust the speed (milliseconds per letter)
 
     return () => clearInterval(intervalId); // Cleanup the interval on component unmount
-  }, [props.response]);
+  }, []);
 
-  return <div>{displayedText}</div>;
+  return <div className="whitespace-pre-wrap">
+  <ReactMarkdown>{displayedText}</ReactMarkdown>
+</div>;
 };
 
 export default TypingEffect;
